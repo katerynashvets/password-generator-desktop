@@ -21,11 +21,11 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang='en'
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className='min-h-full flex flex-row'>
         <Navigation />
-        <div className='flex flex-col w-[80%] p-10 bg-[var(--background)] text-[var(--text-primary)]'>
+        <div className='flex flex-col w-[80%] h-screen p-10 bg-[var(--background)] text-[var(--text-primary)]'>
           {children}
         </div>
       </body>

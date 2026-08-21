@@ -24,7 +24,7 @@ export default function Navigation() {
     <div className='w-[20%] bg-[var(--background-navi)] flex flex-col items-center justify-between'>
       <div className='w-full flex flex-col items-center'>
         <div className='flex w-[80%] justify-between items-center my-10'>
-          <div className='bg-[var(--background-navi-secondary)] rounded-lg p-3 text-[#555cd8]'>
+          <div className='bg-[var(--background-navi-secondary)] rounded-lg p-3 text-[var(--text-active)]'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='24'
@@ -49,7 +49,7 @@ export default function Navigation() {
         <div className='w-full flex flex-col items-center text-[var(--text-primary)]'>
           <Link
             href='/'
-            className={`flex gap-4 w-[90%] px-5 py-5 ${active === NavigationType.generator ? 'bg-[var(--background-navi-secondary)] text-[#7375e5] rounded-xl' : ''}`}
+            className={`flex gap-4 w-[90%] px-5 py-5 ${active === NavigationType.generator ? 'bg-[var(--background-navi-secondary)] text-[var(--text-active)] rounded-xl' : ''}`}
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -75,7 +75,7 @@ export default function Navigation() {
             <span className='text-lg'>Generator</span>
           </Link>
           <Link
-            className={`flex gap-4 w-[90%] px-5 py-5 ${active === NavigationType.history ? 'bg-[var(--background-navi-secondary)] text-[#7375e5] rounded-xl' : ''}`}
+            className={`flex gap-4 w-[90%] px-5 py-5 ${active === NavigationType.history ? 'bg-[var(--background-navi-secondary)] text-[var(--text-active)] rounded-xl' : ''}`}
             href='/history'
           >
             <svg
@@ -96,7 +96,7 @@ export default function Navigation() {
             <span className='text-lg'>History</span>
           </Link>
           <Link
-            className={`flex gap-4 w-[90%] px-5 py-5 ${active === NavigationType.settings ? 'bg-[var(--background-navi-secondary)] text-[#7375e5] rounded-xl' : ''}`}
+            className={`flex gap-4 w-[90%] px-5 py-5 ${active === NavigationType.settings ? 'bg-[var(--background-navi-secondary)] text-[var(--text-active)] rounded-xl' : ''}`}
             href='/settings'
           >
             <svg
@@ -118,7 +118,7 @@ export default function Navigation() {
           </Link>
         </div>
       </div>
-      <div className='w-[90%] flex flex-col itens-center mb-10 gap-10'>
+      <div className='w-[90%] flex flex-col mb-10 gap-10'>
         <div className='bg-[var(--background-navi-secondary)] rounded-lg px-5 py-4'>
           <div className='flex items-center gap-2 mb-2'>
             <div className='bg-[var(--background-selected)] text-[#5153d5] rounded-lg py-2 px-1'>

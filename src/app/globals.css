@@ -9,7 +9,11 @@
   --text-primary: #090b12;
   --text-secondary: #727282;
   --text-green: #6cc681;
+  --text-active: #7375e5;
   --border-container: #d8d9de;
+  --background-item: #f2f3fe;
+  --accent-color: #6049d0;
+  --text-light: #fcfcfe;
 }
 
 :root[data-theme='dark'] {
@@ -20,8 +24,12 @@
   --background-selected: #25293d;
   --text-primary: #fcfcfe;
   --text-secondary: #b9c4d0;
+  --text-active: #7375e5;
   --text-green: #6cc681;
   --border-container: #33374a;
+  --background-item: #151a22;
+  --accent-color: #6049d0;
+  --text-light: #fcfcfe;
 }
 
 @theme inline {
