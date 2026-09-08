@@ -50,10 +50,10 @@ export default function History() {
           </div>
         </div>
         <div className='flex flex-col gap-2 mb-5'>
-          <Password name='pL8#ZsQ!x2@HfN7mKc9' time='Just now' />
-          <Password name='pL8#ZsQ!x2@HfN7mKc9' time='Just now' />
-          <Password name='pL8#ZsQ!x2@HfN7mKc9' time='Just now' />
-          <Password name='pL8#ZsQ!x2@HfN7mKc9' time='Just now' />
+          <Password name='pL8#ZsQ!x2@HfN7mKc1' time='Just now' />
+          <Password name='pL8#ZsQ!x2@HfN7mKc2' time='Just now' />
+          <Password name='pL8#ZsQ!x2@HfN7mKc3' time='Just now' />
+          <Password name='pL8#ZsQ!x2@HfN7mKc4' time='Just now' />
         </div>
       </div>
     </div>
