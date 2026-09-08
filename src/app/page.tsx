@@ -1,10 +1,8 @@
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
 import Password from '../components/Password';
 
 export default function Home() {
   return (
-    <div className='h-full flex flex-col gap-2'>
+    <div className='h-full flex flex-col gap-2 justify-around'>
       <div>
         <span className='block font-bold text-2xl'>
           Generate a secure password
@@ -14,8 +12,8 @@ export default function Home() {
         </span>
       </div>
 
-      <div className='shadow-sm border-1 border-[var(--border-container)] rounded-md pt-6'>
-        <div className='px-10 text-[var(--text-primary)] text-4xl py-6'>
+      <div className='shadow-sm border-1 border-[var(--border-container)] rounded-md pt-4  xl:pt-6'>
+        <div className='px-5 xl:px-10 text-[var(--text-primary)] text-4xl py-4 xl:py-6'>
           <div>pL8#ZsQ!x2@HfN7mKc9</div>
           <div className='flex items-center gap-1 mt-10'>
             <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
@@ -30,18 +28,18 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className='w-full flex justify-between border-t-1 border-t-[var(--border-container)] px-10'>
-          <div className='flex flex-col w-[30%] justify-center my-6 gap-2 border-r-1 border-r-[var(--border-container)]'>
+        <div className='w-full flex justify-between border-t-1 border-t-[var(--border-container)] px-5 xl:px-10'>
+          <div className='flex flex-col w-[30%] justify-center my-3 xl:my-6 gap-2 border-r-1 border-r-[var(--border-container)]'>
             <span className='text-[var(--text-secondary)] text-lg'>Length</span>
             <span className='text-xl font-semibold'>24</span>
           </div>
-          <div className='flex flex-col w-[30%] justify-center my-6 gap-2 border-r-1 border-r-[var(--border-container)]'>
+          <div className='flex flex-col w-[30%] justify-center my-3 xl:my-6 gap-2 border-r-1 border-r-[var(--border-container)]'>
             <span className='text-[var(--text-secondary)] text-lg '>
               Character types
             </span>
             <span className='text-xl font-semibold'>4/4</span>
           </div>
-          <div className='flex flex-col w-[30%] justify-center my-6 gap-2'>
+          <div className='flex flex-col w-[30%] justify-center my-3 xl:my-6 gap-2'>
             <span className='text-[var(--text-secondary)] text-lg'>
               Estimated strength
             </span>
@@ -52,32 +50,30 @@ export default function Home() {
         </div>
       </div>
       <div className='flex justify-between h-[50%]'>
-        <div className='w-[49%] h-full shadow-sm border-1 border-[var(--border-container)] rounded-md px-10 flex flex-col justify-around pb-5'>
+        <div className='w-[49%] h-full shadow-sm border-1 border-[var(--border-container)] rounded-md px-5 xl:px-10 flex flex-col justify-around pb-5'>
           <span className='block font-bold text-lg'>Options</span>
           <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-4'>
+            <div className='flex items-center gap-4 text-lg xl:text-xl'>
               <span>Length</span>
               <input
                 type='number'
                 defaultValue={12}
-                className='border-1 border-[var(--border-container)] rounded-lg w-9 py-[1px] flex'
+                className='border-1 border-[var(--border-container)] rounded-lg w-12 py-[1px] flex'
               />
             </div>
             <div className='w-[50%]'>
-              <Box sx={{ width: '100%' }}>
-                <Slider
-                  aria-label='Small steps'
-                  defaultValue={12}
-                  step={1}
-                  marks
-                  min={8}
-                  max={64}
-                  valueLabelDisplay='auto'
-                />
-              </Box>
+              <input
+                type='range'
+                aria-label='Password length'
+                defaultValue={12}
+                step={1}
+                min={8}
+                max={64}
+                className='w-full accent-[var(--text-active)]'
+              />
             </div>
           </div>
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 text-lg xl:text-xl'>
             <div className='flex items-center gap-4'>
               <input type='checkbox' className='w-4 h-4' />{' '}
               <span>Include uppercase letters (A-Z)</span>
@@ -95,7 +91,7 @@ export default function Home() {
               <span>Include symbols (!@#$%^&*)</span>
             </div>
           </div>
-          <button className='flex items-center gap-4 text-[var(--text-light)] bg-[var(--text-active)] w-full py-3 flex justify-center rounded-lg'>
+          <button className='flex items-center gap-4 text-[var(--text-light)] bg-[var(--text-active)] w-full py-2 xl:py-3 flex justify-center rounded-lg cursor-pointer'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='24'
@@ -116,7 +112,7 @@ export default function Home() {
             <span className='text-xl'>Generate</span>
           </button>
         </div>
-        <div className='w-[49%] h-full shadow-sm border-1 border-[var(--border-container)] rounded-md pt-4 px-10 flex flex-col gap-5'>
+        <div className='w-[49%] h-full shadow-sm border-1 border-[var(--border-container)] rounded-md pt-4 px-5 xl:px-10 flex flex-col gap-5'>
           <div className='flex items-center justify-between'>
             <span className='block font-bold text-lg'>Recent passwords</span>
             <button className='text-[var(--text-active)] font-medium cursor-pointer'>

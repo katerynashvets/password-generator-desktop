@@ -6,6 +6,8 @@ interface PasswordProps {
 }
 
 export default function Password({ name, time }: PasswordProps) {
+  const copyToClipboard = () => {};
+
   return (
     <div className='w-full flex justify-between items-center bg-[var(--background-item)] px-5 py-4 rounded-lg'>
       <span>{name}</span>
@@ -21,7 +23,7 @@ export default function Password({ name, time }: PasswordProps) {
           strokeWidth='2'
           strokeLinecap='round'
           strokeLinejoin='round'
-          className='lucide lucide-copy-icon lucide-copy'
+          className='lucide lucide-copy-icon lucide-copy cursor-pointer'
         >
           <rect width='14' height='14' x='8' y='8' rx='2' ry='2' />
           <path d='M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2' />
