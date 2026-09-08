@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import NavigationType from '../../enums/NavigationType.enum';
+import { useTheme } from './ThemeProvider';
 
 export default function Navigation() {
   const pathname = usePathname();
-  const [isDark, setIsDark] = useState<boolean>(false);
+  const { isDark, setIsDark } = useTheme();
 
   const active =
     pathname === '/history'
@@ -16,14 +16,10 @@ export default function Navigation() {
         ? NavigationType.settings
         : NavigationType.generator;
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
-  }, [isDark]);
-
   return (
-    <div className='w-[20%] bg-[var(--background-navi)] flex flex-col items-center justify-between'>
+    <div className='w-[25%] xl:w-[20%] bg-[var(--background-navi)] flex flex-col items-center justify-between'>
       <div className='w-full flex flex-col items-center'>
-        <div className='flex w-[80%] justify-between items-center my-10'>
+        <div className='flex w-[80%] gap-5 items-center my-10'>
           <div className='bg-[var(--background-navi-secondary)] rounded-lg p-3 text-[var(--text-active)]'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
