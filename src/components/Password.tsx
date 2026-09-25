@@ -1,11 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-
-interface PasswordProps {
-  name: string;
-  time: string;
-}
+import { PasswordType } from '../types/Password';
 
 const particles = [
   { x: -28, y: -24 },
@@ -18,7 +14,7 @@ const particles = [
   { x: -30, y: 10 },
 ];
 
-export default function Password({ name, time }: PasswordProps) {
+export default function Password({ name, time }: PasswordType) {
   const [copied, setCopied] = useState<boolean>(false);
   const [showParticles, setShowParticles] = useState<boolean>(false);
 

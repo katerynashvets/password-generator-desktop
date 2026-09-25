@@ -1,6 +1,33 @@
+'use client';
+
+import { useState } from 'react';
 import Password from '../components/Password';
+import { passGenerator } from '../helper/passGenerator';
+import { PasswordType } from '../types/Password';
 
 export default function Home() {
+  const [length, setLength] = useState<number>(16);
+  const [upperCase, setUpperCase] = useState<boolean>(true);
+  const [lowerCase, setLowerCase] = useState<boolean>(true);
+  const [numbers, setNumbers] = useState<boolean>(true);
+  const [symbols, setSymbols] = useState<boolean>(true);
+  const [charTypes, setCharTypes] = useState<number>(4);
+  const [result, setResult] = useState<PasswordType>(
+    passGenerator({
+      length,
+      upperCase,
+      lowerCase,
+      numbers,
+      symbols,
+    }),
+  );
+
+  const charsTypesCalc = () => {
+    const charTypes = [upperCase, lowerCase, numbers, symbols];
+    const result = charTypes.filter((type) => type == true).length;
+    setCharTypes(result);
+  };
+
   return (
     <div className='h-full flex flex-col gap-2 justify-around'>
       <div>
@@ -14,7 +41,7 @@ export default function Home() {
 
       <div className='shadow-sm border-1 border-[var(--border-container)] rounded-md pt-4  xl:pt-6'>
         <div className='px-5 xl:px-10 text-[var(--text-primary)] text-4xl py-4 xl:py-6'>
-          <div>pL8#ZsQ!x2@HfN7mKc9</div>
+          <div>{result.name}</div>
           <div className='flex items-center gap-1 mt-10'>
             <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
             <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
@@ -31,13 +58,13 @@ export default function Home() {
         <div className='w-full flex justify-between border-t-1 border-t-[var(--border-container)] px-5 xl:px-10'>
           <div className='flex flex-col w-[30%] justify-center my-3 xl:my-6 gap-2 border-r-1 border-r-[var(--border-container)]'>
             <span className='text-[var(--text-secondary)] text-lg'>Length</span>
-            <span className='text-xl font-semibold'>24</span>
+            <span className='text-xl font-semibold'>{result.name.length}</span>
           </div>
           <div className='flex flex-col w-[30%] justify-center my-3 xl:my-6 gap-2 border-r-1 border-r-[var(--border-container)]'>
             <span className='text-[var(--text-secondary)] text-lg '>
               Character types
             </span>
-            <span className='text-xl font-semibold'>4/4</span>
+            <span className='text-xl font-semibold'>{charTypes}/4</span>
           </div>
           <div className='flex flex-col w-[30%] justify-center my-3 xl:my-6 gap-2'>
             <span className='text-[var(--text-secondary)] text-lg'>
@@ -57,7 +84,7 @@ export default function Home() {
               <span>Length</span>
               <input
                 type='number'
-                defaultValue={12}
+                defaultValue={length}
                 className='border-1 border-[var(--border-container)] rounded-lg w-12 py-[1px] flex'
               />
             </div>
@@ -65,7 +92,8 @@ export default function Home() {
               <input
                 type='range'
                 aria-label='Password length'
-                defaultValue={12}
+                defaultValue={length}
+                onChange={(event) => setLength(Number(event.target.value))}
                 step={1}
                 min={8}
                 max={64}
@@ -75,23 +103,57 @@ export default function Home() {
           </div>
           <div className='flex flex-col gap-2 text-lg xl:text-xl'>
             <div className='flex items-center gap-4'>
-              <input type='checkbox' className='w-4 h-4' />{' '}
-              <span>Include uppercase letters (A-Z)</span>
-            </div>
-            <div className='flex items-center gap-4'>
-              <input type='checkbox' className='w-4 h-4' />{' '}
+              <input
+                type='checkbox'
+                className='w-4 h-4'
+                checked={lowerCase}
+                onChange={() => setLowerCase(!lowerCase)}
+              />{' '}
               <span>Include lowercase letters (a-z)</span>
             </div>
             <div className='flex items-center gap-4'>
-              <input type='checkbox' className='w-4 h-4' />{' '}
+              <input
+                type='checkbox'
+                className='w-4 h-4'
+                checked={upperCase}
+                onChange={() => setUpperCase(!upperCase)}
+              />{' '}
+              <span>Include uppercase letters (A-Z)</span>
+            </div>
+            <div className='flex items-center gap-4'>
+              <input
+                type='checkbox'
+                className='w-4 h-4'
+                checked={numbers}
+                onChange={() => setNumbers(!numbers)}
+              />{' '}
               <span>Include numbers (0-9)</span>
             </div>
             <div className='flex items-center gap-4'>
-              <input type='checkbox' className='w-4 h-4' />{' '}
+              <input
+                type='checkbox'
+                className='w-4 h-4'
+                checked={symbols}
+                onChange={() => setSymbols(!symbols)}
+              />{' '}
               <span>Include symbols (!@#$%^&*)</span>
             </div>
           </div>
-          <button className='flex items-center gap-4 text-[var(--text-light)] bg-[var(--text-active)] w-full py-2 xl:py-3 flex justify-center rounded-lg cursor-pointer'>
+          <button
+            className='flex items-center gap-4 text-[var(--text-light)] bg-[var(--text-active)] w-full py-2 xl:py-3 flex justify-center rounded-lg cursor-pointer'
+            onClick={() => (
+              setResult(
+                passGenerator({
+                  length,
+                  upperCase,
+                  lowerCase,
+                  numbers,
+                  symbols,
+                }),
+              ),
+              charsTypesCalc()
+            )}
+          >
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='24'
