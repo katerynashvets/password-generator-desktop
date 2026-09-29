@@ -110,6 +110,22 @@ export default function PasswordGenerator() {
     }
   };
 
+  const levels = [
+    calcPassStrengthEnum.veryWeak,
+    calcPassStrengthEnum.weak,
+    calcPassStrengthEnum.reasonable,
+    calcPassStrengthEnum.strong,
+    calcPassStrengthEnum.veryStrong,
+  ];
+  const colors = [
+    'bg-[#ff4100]',
+    'bg-[#e74542]',
+    'bg-[#ffb600]',
+    'bg-[#6cc681]',
+    'bg-[#54a36e]',
+  ];
+  const level = levels.indexOf(strength) + 1;
+
   return (
     <div className='h-full flex flex-col gap-2 justify-around'>
       <div>
@@ -240,17 +256,20 @@ export default function PasswordGenerator() {
               </button>
             </div>
           </div>
-          <div className='flex items-center gap-1 mt-10'>
-            <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
-            <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
-            <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
-            <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
-            <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
-            <div className='w-20 rounded-xl h-2 bg-[#6cc681]'></div>
-            <div className='w-20 rounded-xl h-2 bg-[#d5e4e0]'></div>
-            <div className='text-base text-[var(--text-green)] font-semibold ml-4'>
+          <div id='parent-div' className='flex items-center gap-1 mt-10'>
+            {colors.map((_, index) => (
+              <div
+                key={index}
+                className={`w-20 rounded-xl h-2 ${
+                  index < level ? colors[level - 1] : 'bg-[#d5e4e0]'
+                }`}
+              />
+            ))}
+            <span
+              className={`text-base font-semibold ml-4 ${strength === calcPassStrengthEnum.veryWeak ? 'text-[#ff4100]' : strength === calcPassStrengthEnum.weak ? 'text-[#e74542]' : strength === calcPassStrengthEnum.reasonable ? 'text-[#ffb600]' : strength === calcPassStrengthEnum.strong ? 'text-[#6cc681]' : 'text-[#54a36e]'}`}
+            >
               {strength}
-            </div>
+            </span>
           </div>
         </div>
         <div className='w-full flex justify-between border-t-1 border-t-[var(--border-container)] px-5 xl:px-10'>
@@ -268,7 +287,9 @@ export default function PasswordGenerator() {
             <span className='text-[var(--text-secondary)] text-lg'>
               Estimated strength
             </span>
-            <span className='text-xl text-[var(--text-green)] font-semibold'>
+            <span
+              className={`text-xl font-semibold ${strength === calcPassStrengthEnum.veryWeak ? 'text-[#ff4100]' : strength === calcPassStrengthEnum.weak ? 'text-[#e74542]' : strength === calcPassStrengthEnum.reasonable ? 'text-[#ffb600]' : strength === calcPassStrengthEnum.strong ? 'text-[#6cc681]' : 'text-[#54a36e]'}`}
+            >
               {strength}
             </span>
           </div>

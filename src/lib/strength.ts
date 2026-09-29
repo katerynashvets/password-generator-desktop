@@ -11,13 +11,13 @@ export function calcPassStrength(
   poolsize: number,
 ): calcPassStrengthEnum {
   const entropy = length * Math.log2(poolsize);
-  if (entropy < 28) {
+  if (entropy < 35) {
     return calcPassStrengthEnum.veryWeak;
-  } else if (entropy >= 28 && entropy <= 35) {
+  } else if (entropy >= 35 && entropy <= 50) {
     return calcPassStrengthEnum.weak;
-  } else if (entropy > 35 && entropy <= 59) {
+  } else if (entropy > 50 && entropy <= 70) {
     return calcPassStrengthEnum.reasonable;
-  } else if (entropy > 59 && entropy <= 128) {
+  } else if (entropy > 70 && entropy <= 100) {
     return calcPassStrengthEnum.strong;
   } else {
     return calcPassStrengthEnum.veryStrong;
