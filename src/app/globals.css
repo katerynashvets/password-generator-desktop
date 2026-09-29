@@ -57,6 +57,16 @@ body {
   animation: copy-particle-explode 550ms ease-out forwards;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 @keyframes copy-particle-explode {
   0% {
     opacity: 1;
