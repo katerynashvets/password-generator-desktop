@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { passGenerator } from '../helper/passGenerator';
 import { calcPassStrength, calcPassStrengthEnum } from '../lib/strength';
+import { useSettingsStore } from '../store/settingsStore';
 import { PasswordType } from '../types/Password';
 import Password from './Password';
 
@@ -18,12 +19,25 @@ const particles = [
 ];
 
 export default function PasswordGenerator() {
-  const [length, setLength] = useState<number>(16);
-  const [upperCase, setUpperCase] = useState<boolean>(true);
-  const [lowerCase, setLowerCase] = useState<boolean>(true);
-  const [numbers, setNumbers] = useState<boolean>(true);
-  const [symbols, setSymbols] = useState<boolean>(true);
-  const [charTypes, setCharTypes] = useState<number>(4);
+  const settings = useSettingsStore((s) => s.settings);
+
+  const [length, setLength] = useState<number>(settings.defaultLength);
+  const [upperCase, setUpperCase] = useState<boolean>(
+    settings.includeUppercase,
+  );
+  const [lowerCase, setLowerCase] = useState<boolean>(
+    settings.includeLowercase,
+  );
+  const [numbers, setNumbers] = useState<boolean>(settings.includeNumbers);
+  const [symbols, setSymbols] = useState<boolean>(settings.includeSymbols);
+  const [charTypes, setCharTypes] = useState<number>(
+    [
+      settings.includeLowercase,
+      settings.includeUppercase,
+      settings.includeNumbers,
+      settings.includeSymbols,
+    ].filter((c) => c === true).length,
+  );
   const [result, setResult] = useState<PasswordType>(() =>
     passGenerator({ length, upperCase, lowerCase, numbers, symbols }),
   );

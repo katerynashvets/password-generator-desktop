@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <body className='min-h-full flex flex-row'>
         <ThemeProvider>
           <Navigation />
-          <div className='flex flex-col w-[80%] h-screen p-5 bg-[var(--background)] text-[var(--text-primary)]'>
+          <div className='flex flex-col w-[80%] h-screen px-7 py-10 bg-[var(--background)] text-[var(--text-primary)]'>
             {children}
           </div>
         </ThemeProvider>
