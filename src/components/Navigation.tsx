@@ -10,11 +10,9 @@ export default function Navigation() {
   const { isDark, setIsDark } = useTheme();
 
   const active =
-    pathname === '/history'
-      ? NavigationType.history
-      : pathname === '/settings'
-        ? NavigationType.settings
-        : NavigationType.generator;
+    pathname === '/settings'
+      ? NavigationType.settings
+      : NavigationType.generator;
 
   return (
     <div className='w-[25%] xl:w-[20%] bg-[var(--background-navi)] flex flex-col items-center justify-between'>
@@ -69,27 +67,6 @@ export default function Navigation() {
               <path d='M11 3H9' />
             </svg>
             <span className='text-lg'>Generator</span>
-          </Link>
-          <Link
-            className={`flex gap-4 w-[90%] px-5 py-5 ${active === NavigationType.history ? 'bg-[var(--background-navi-secondary)] text-[var(--text-active)] rounded-xl' : ''}`}
-            href='/history'
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='24'
-              height='24'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              className='lucide lucide-clock-icon lucide-clock'
-            >
-              <circle cx='12' cy='12' r='10' />
-              <path d='M12 6v6l4 2' />
-            </svg>{' '}
-            <span className='text-lg'>History</span>
           </Link>
           <Link
             className={`flex gap-4 w-[90%] px-5 py-5 ${active === NavigationType.settings ? 'bg-[var(--background-navi-secondary)] text-[var(--text-active)] rounded-xl' : ''}`}

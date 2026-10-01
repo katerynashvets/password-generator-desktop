@@ -8,7 +8,6 @@ const defaultSettings: SettingsType = {
   includeLowercase: true,
   includeNumbers: true,
   includeSymbols: true,
-  clearHistoryOnExit: false,
 };
 
 type SettingsStore = {

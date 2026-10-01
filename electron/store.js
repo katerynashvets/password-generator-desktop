@@ -9,7 +9,6 @@ const store = new Store({
       includeLowercase: true,
       includeNumbers: true,
       includeSymbols: true,
-      clearHistoryOnExit: false,
     },
   },
 });

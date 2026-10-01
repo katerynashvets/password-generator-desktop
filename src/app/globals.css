@@ -67,6 +67,75 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+.checkbox-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox-container:hover .checkbox-input ~ .checkmark {
+  background-color: #fcfcfe;
+  border: 1px solid var(--foreground);
+}
+
+.checkbox-container .checkbox-input:checked ~ .checkmark {
+  background-color: var(--text-active);
+  border: none;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container .checkbox-input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  top: 50%;
+  left: 50%;
+  width: 45%;
+  height: 65%;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: translate(-50%, -60%) rotate(45deg);
+  -ms-transform: translate(-50%, -60%) rotate(45deg);
+  transform: translate(-50%, -60%) rotate(45deg);
+}
+
+.slider {
+  inset: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  top: 2px;
+  left: 2px;
+  height: 16px;
+  width: 16px;
+  background-color: white;
+  border-radius: 50px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.switch input:checked + .slider {
+  background: var(--text-active);
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px var(--text-active);
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(28px);
+}
+
 @keyframes copy-particle-explode {
   0% {
     opacity: 1;

@@ -7,7 +7,6 @@ interface ElectronAPI {
     includeLowercase: boolean;
     includeNumbers: boolean;
     includeSymbols: boolean;
-    clearHistoryOnExit: boolean;
   }>;
   setSettings: (
     key:
@@ -16,8 +15,7 @@ interface ElectronAPI {
       | 'includeUppercase'
       | 'includeLowercase'
       | 'includeNumbers'
-      | 'includeSymbols'
-      | 'clearHistoryOnExit',
+      | 'includeSymbols',
     value: string | number | boolean,
   ) => Promise<void>;
 }

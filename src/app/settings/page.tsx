@@ -1,10 +1,9 @@
 'use client';
-
-import Switch from '@mui/material/Switch';
-import { useFormik } from 'formik';
+import { FormikErrors, useFormik } from 'formik';
 import { useState } from 'react';
 import { useTheme } from '../../components/ThemeProvider';
 import { useSettingsStore } from '../../store/settingsStore';
+import { SettingsType } from '../../types/Settings';
 
 export default function Settings() {
   const { isDark, setIsDark } = useTheme();
@@ -13,7 +12,6 @@ export default function Settings() {
   const [notification, setNotification] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
   const [confirmation, setConfirmation] = useState<boolean>(false);
-  const label = { slotProps: { input: { 'aria-label': 'Color switch demo' } } };
 
   const disableNotification = () => {
     setError(false);
@@ -24,6 +22,19 @@ export default function Settings() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: settings,
+    validate: (values) => {
+      const errors: FormikErrors<SettingsType> = {};
+
+      if (
+        !Number.isInteger(Number(values.defaultLength)) ||
+        Number(values.defaultLength) < 8 ||
+        Number(values.defaultLength) > 64
+      ) {
+        errors.defaultLength = 'Length must be between 8 and 64.';
+      }
+
+      return errors;
+    },
     onSubmit: async (values) => {
       try {
         await saveSettings(values);
@@ -39,10 +50,10 @@ export default function Settings() {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className='relative'>
+    <form onSubmit={formik.handleSubmit} className='relative' noValidate>
       {(error || confirmation) && (
         <div
-          className={`absolute bg-[#6cc681] px-6 py-1 text-lg rounded-lg right-[40%] ${error ? 'bg-[#e74542]' : confirmation ? 'bg-[#6cc681]' : 'bg-[#ffb305]'}`}
+          className={`absolute px-6 py-1 text-lg text-[#fcfcfe] rounded-lg right-[40%] ${error ? 'bg-[#e74542]' : confirmation ? 'bg-[#6cc681]' : 'bg-[#ffb305]'}`}
         >
           {notification}
         </div>
@@ -69,56 +80,87 @@ export default function Settings() {
         <div className='flex flex-col gap-1 xl:gap-2 mt-3 xl:mt-4'>
           <div className='flex justify-between items-center'>
             <span>Default length</span>
-            <input
-              id='defaultLength'
-              name='defaultLength'
-              type='number'
-              value={formik.values.defaultLength}
-              onChange={formik.handleChange}
-              max={64}
-              min={8}
-              className='border-1 border-[var(--border-container)] rounded-lg w-16 px-2 py-2 flex'
-            />
+            <div className='flex flex-col items-end'>
+              <input
+                id='defaultLength'
+                name='defaultLength'
+                type='number'
+                value={formik.values.defaultLength}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                max={64}
+                min={8}
+                aria-invalid={Boolean(formik.errors.defaultLength)}
+                aria-describedby='defaultLength-error'
+                className='border-1 border-[var(--border-container)] rounded-lg w-12 px-2 py-2 flex'
+              />
+              {formik.errors.defaultLength &&
+                (formik.touched.defaultLength || formik.submitCount > 0) && (
+                  <span
+                    id='defaultLength-error'
+                    className='mt-1 text-sm text-[#e74542]'
+                  >
+                    {formik.errors.defaultLength}
+                  </span>
+                )}
+            </div>
           </div>
+
           <div className='flex justify-between items-center'>
             <span>Include uppercase letters (A-Z)</span>
-            <Switch
-              {...label}
-              name='includeUppercase'
-              id='includeUppercase'
-              checked={formik.values.includeUppercase}
-              onChange={formik.handleChange}
-            />
+            <label className='switch w-12 h-5 relative inline-block'>
+              <input
+                type='checkbox'
+                name='includeUppercase'
+                id='includeUppercase'
+                checked={formik.values.includeUppercase}
+                onChange={formik.handleChange}
+                className='opacity-0 w-0 h-0'
+              />
+              <span className='slider absolute cursor-pointer rounded-[50px] bg-[var(--background-navi-secondary)]'></span>
+            </label>
           </div>
           <div className='flex justify-between items-center'>
             <span>Include lowercase letters (a-z)</span>
-            <Switch
-              {...label}
-              name='includeLowercase'
-              id='includeLowercase'
-              checked={formik.values.includeLowercase}
-              onChange={formik.handleChange}
-            />
+            <label className='switch w-12 h-5 relative inline-block'>
+              <input
+                type='checkbox'
+                name='includeLowercase'
+                id='includeLowercase'
+                checked={formik.values.includeLowercase}
+                onChange={formik.handleChange}
+                className='opacity-0 w-0 h-0'
+              />
+              <span className='slider absolute cursor-pointer rounded-[50px] bg-[var(--background-navi-secondary)]'></span>
+            </label>
           </div>
           <div className='flex justify-between items-center'>
             <span>Include numbers (0-9)</span>
-            <Switch
-              {...label}
-              name='includeNumbers'
-              id='includeNumbers'
-              checked={formik.values.includeNumbers}
-              onChange={formik.handleChange}
-            />
+            <label className='switch w-12 h-5 relative inline-block'>
+              <input
+                type='checkbox'
+                name='includeNumbers'
+                id='includeNumbers'
+                checked={formik.values.includeNumbers}
+                onChange={formik.handleChange}
+                className='opacity-0 w-0 h-0'
+              />
+              <span className='slider absolute cursor-pointer rounded-[50px] bg-[var(--background-navi-secondary)]'></span>
+            </label>
           </div>
           <div className='flex justify-between items-center'>
             <span>Include symbols (!@#$%^&*)</span>
-            <Switch
-              {...label}
-              name='includeSymbols'
-              id='includeSymbols'
-              checked={formik.values.includeSymbols}
-              onChange={formik.handleChange}
-            />
+            <label className='switch w-12 h-5 relative inline-block'>
+              <input
+                type='checkbox'
+                name='includeSymbols'
+                id='includeSymbols'
+                checked={formik.values.includeSymbols}
+                onChange={formik.handleChange}
+                className='opacity-0 w-0 h-0'
+              />
+              <span className='slider absolute cursor-pointer rounded-[50px] bg-[var(--background-navi-secondary)]'></span>
+            </label>
           </div>
         </div>
       </div>
@@ -187,21 +229,6 @@ export default function Settings() {
               </svg>
               <span>Light</span>
             </button>
-          </div>
-        </div>
-      </div>
-      <div className='px-10 shadow-sm border-1 border-[var(--border-container)] rounded-lg mt-5 py-5 text-lg'>
-        <span className='font-semibold'>Other</span>
-        <div className='flex flex-col gap-3 mt-2'>
-          <div className='flex justify-between items-center'>
-            <span>Clear history on exit</span>
-            <Switch
-              {...label}
-              id='clearHistoryOnExit'
-              name='clearHistoryOnExit'
-              checked={formik.values.clearHistoryOnExit}
-              onChange={formik.handleChange}
-            />
           </div>
         </div>
       </div>

@@ -5,7 +5,6 @@ import { passGenerator } from '../helper/passGenerator';
 import { calcPassStrength, calcPassStrengthEnum } from '../lib/strength';
 import { useSettingsStore } from '../store/settingsStore';
 import { PasswordType } from '../types/Password';
-import Password from './Password';
 
 const particles = [
   { x: -28, y: -24 },
@@ -310,63 +309,13 @@ export default function PasswordGenerator() {
         </div>
       </div>
       <div className='flex justify-between h-[50%]'>
-        <div className='w-[49%] h-full shadow-sm border-1 border-[var(--border-container)] rounded-md px-5 xl:px-10 flex flex-col justify-around pb-5'>
+        <div className='w-full h-full shadow-sm border-1 border-[var(--border-container)] rounded-md px-5 xl:px-10 flex flex-col justify-around pb-5'>
           <span className='block font-bold text-lg'>Options</span>
-          <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-10'>
             <div className='flex items-center gap-4 text-lg xl:text-xl'>
               <span>Length</span>
-              <div className='flex'>
-                <button
-                  onClick={() => setLength(length - 1)}
-                  className='cursor-pointer'
-                >
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='16'
-                    height='16'
-                    viewBox='0 0 20 20'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    className='lucide lucide-minus preview-icon'
-                  >
-                    <path d='M5 12h14' />
-                  </svg>
-                </button>
-                <input
-                  value={length}
-                  className='w-12 text-center focus:outline-none'
-                  type='number'
-                  min={8}
-                  max={64}
-                  onChange={(e) => setLength(Number(e.target.value))}
-                />
-                <button
-                  onClick={() => setLength(length + 1)}
-                  className='cursor-pointer'
-                >
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='16'
-                    height='16'
-                    viewBox='0 0 20 20'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    className='lucide lucide-plus preview-icon'
-                  >
-                    <path d='M5 12h14' />
-                    <path d='M12 5v14' />
-                  </svg>
-                </button>
-              </div>
             </div>
-
-            <div className='w-[50%]'>
+            <div className='w-[50%] flex gap-6'>
               <input
                 type='range'
                 aria-label='Password length'
@@ -377,6 +326,7 @@ export default function PasswordGenerator() {
                 max={64}
                 className='w-full accent-[var(--text-active)]'
               />
+              <span className='text-2xl'>{length}</span>
             </div>
           </div>
           {!changeLength && (
@@ -385,43 +335,47 @@ export default function PasswordGenerator() {
             </span>
           )}
 
-          <div className='flex flex-col gap-2 text-lg xl:text-xl'>
-            <div className='flex items-center gap-4'>
+          <div className='flex flex-col gap-4 text-lg xl:text-xl'>
+            <label className='checkbox-container flex items-center gap-4 cursor-pointer w-fit'>
               <input
                 type='checkbox'
-                className='w-4 h-4'
+                className='checkbox-input absolute opacity-0 h-0 w-0 cursor-pointer'
                 checked={lowerCase}
                 onChange={() => handleChange(lowerCase, setLowerCase)}
               />{' '}
+              <span className='checkmark relative shrink-0 rounded-[20%] h-5 w-5 bg-[#eee] border-1'></span>
               <span>Include lowercase letters (a-z)</span>
-            </div>
-            <div className='flex items-center gap-4'>
+            </label>
+            <label className='checkbox-container flex items-center gap-4 cursor-pointer w-fit'>
               <input
                 type='checkbox'
-                className='w-4 h-4'
+                className='checkbox-input absolute opacity-0 h-0 w-0 cursor-pointer'
                 checked={upperCase}
                 onChange={() => handleChange(upperCase, setUpperCase)}
               />{' '}
+              <span className='checkmark relative shrink-0 rounded-[20%] h-5 w-5 bg-[#eee] border-1'></span>
               <span>Include uppercase letters (A-Z)</span>
-            </div>
-            <div className='flex items-center gap-4'>
+            </label>
+            <label className='checkbox-container flex items-center gap-4 cursor-pointer w-fit'>
               <input
                 type='checkbox'
-                className='w-4 h-4'
+                className='checkbox-input absolute opacity-0 h-0 w-0 cursor-pointer'
                 checked={numbers}
                 onChange={() => handleChange(numbers, setNumbers)}
               />{' '}
+              <span className='checkmark relative shrink-0 rounded-[20%] h-5 w-5 bg-[#eee] border-1'></span>
               <span>Include numbers (0-9)</span>
-            </div>
-            <div className='flex items-center gap-4'>
+            </label>
+            <label className='checkbox-container flex items-center gap-4 cursor-pointer w-fit'>
               <input
                 type='checkbox'
-                className='w-4 h-4'
+                className='checkbox-input absolute opacity-0 h-0 w-0 cursor-pointer'
                 checked={symbols}
                 onChange={() => handleChange(symbols, setSymbols)}
               />{' '}
+              <span className='checkmark relative shrink-0 rounded-[20%] h-5 w-5 bg-[#eee] border-1'></span>
               <span>Include symbols (!@#$%^&*)</span>
-            </div>
+            </label>
           </div>
           {!change && (
             <span className='text-sm text-[var(--text-red)]'>
@@ -451,20 +405,6 @@ export default function PasswordGenerator() {
             </svg>{' '}
             <span className='text-xl'>Generate</span>
           </button>
-        </div>
-        <div className='w-[49%] h-full shadow-sm border-1 border-[var(--border-container)] rounded-md pt-4 px-5 xl:px-10 flex flex-col gap-5'>
-          <div className='flex items-center justify-between'>
-            <span className='block font-bold text-lg'>Recent passwords</span>
-            <button className='text-[var(--text-active)] font-medium cursor-pointer'>
-              Clear
-            </button>
-          </div>
-          <div className='flex flex-col gap-2 h-[80%]'>
-            <Password name='pL8#ZsQ!x2@HfN7mKc9' time='Just now' />
-            <Password name='pL8#ZsQ!x2@HfN7mKc9' time='Just now' />
-            <Password name='pL8#ZsQ!x2@HfN7mKc9' time='Just now' />
-            <Password name='pL8#ZsQ!x2@HfN7mKc9' time='Just now' />
-          </div>
         </div>
       </div>
     </div>

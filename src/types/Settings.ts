@@ -5,5 +5,4 @@ export type SettingsType = {
   includeLowercase: boolean;
   includeNumbers: boolean;
   includeSymbols: boolean;
-  clearHistoryOnExit: boolean;
 };
