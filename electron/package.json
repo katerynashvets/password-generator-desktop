@@ -22,9 +22,17 @@
       "main.js",
       "preload.cjs",
       "store.js",
-      "../out/**/*",
-      "../enums/**/*"
+      {
+        "from": "../out",
+        "to": "out",
+        "filter": [
+          "**/*"
+        ]
+      }
     ]
+  },
+  "dependencies": {
+    "electron-store": "^10.0.0"
   },
   "devDependencies": {
     "electron": "^44.5.1",

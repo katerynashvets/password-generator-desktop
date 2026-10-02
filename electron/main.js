@@ -1,10 +1,54 @@
-import { app, BrowserWindow, ipcMain, protocol } from 'electron';
+import { app, BrowserWindow, ipcMain, net, protocol } from 'electron';
+import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import store from './store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-isDev = !app.isPackaged;
+const isDev = !app.isPackaged;
+const outDir = isDev
+  ? path.join(__dirname, '../out')
+  : path.join(__dirname, 'out');
+
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: 'app',
+    privileges: {
+      standard: true,
+      secure: true,
+      supportFetchAPI: true,
+      corsEnabled: true,
+    },
+  },
+]);
+
+function resolveFile(pathname) {
+  const filePath = path.normalize(
+    path.join(outDir, decodeURIComponent(pathname)),
+  );
+
+  const rel = path.relative(outDir, filePath);
+  if (rel.startsWith('..') || path.isAbsolute(rel)) return null;
+
+  const candidates = [
+    filePath,
+    path.join(filePath, 'index.html'),
+    `${filePath}.html`,
+  ];
+  return (
+    candidates.find((p) => fs.existsSync(p) && fs.statSync(p).isFile()) ?? null
+  );
+}
+
+function registerAppProtocol() {
+  protocol.handle('app', (request) => {
+    const { pathname } = new URL(request.url);
+    const filePath = resolveFile(pathname) ?? resolveFile('/404.html');
+
+    if (!filePath) return new Response('Not found', { status: 404 });
+    return net.fetch(pathToFileURL(filePath).toString());
+  });
+}
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -22,18 +66,12 @@ function createWindow() {
   if (isDev) {
     win.loadURL('http://localhost:3000');
   } else {
-    win.loadFile(path.join(__dirname, '../out/index.html'));
+    win.loadURL('app://local/');
   }
 }
 
 app.whenReady().then(() => {
-  protocol.interceptFileProtocol('file', (request, callback) => {
-    let url = request.url.replace('file://', '');
-    if (!url.includes('.')) {
-      url = path.join(__dirname, '../out', url, 'index.html');
-    }
-    callback({ path: url });
-  });
+  registerAppProtocol();
 
   ipcMain.handle('settings:get', () => {
     return store.get('settings');

@@ -44,3 +44,9 @@ next-env.d.ts
 
 # release
 /release
+
+# AI agent hooks (SkillKit)
+/.claude/
+/.cursor/
+/.kiro/
+/.github/hooks/

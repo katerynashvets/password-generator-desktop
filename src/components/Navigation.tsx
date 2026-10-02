@@ -10,7 +10,7 @@ export default function Navigation() {
   const { isDark, setIsDark } = useTheme();
 
   const active =
-    pathname === '/settings'
+    pathname.replace(/\/+$/, '') === '/settings'
       ? NavigationType.settings
       : NavigationType.generator;
 
