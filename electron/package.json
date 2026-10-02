@@ -1,3 +1,33 @@
 {
-  "type": "module"
+  "name": "password-generator",
+  "version": "1.0.0",
+  "description": "A secure password generator desktop app",
+  "author": "Kateryna Shvets",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dist": "electron-builder",
+    "start": "electron ."
+  },
+  "build": {
+    "appId": "com.kateryna.password-generator",
+    "productName": "Password Generator",
+    "directories": {
+      "output": "../release"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "main.js",
+      "preload.cjs",
+      "store.js",
+      "../out/**/*",
+      "../enums/**/*"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^24.0.0"
+  }
 }

@@ -1,9 +1,10 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, protocol } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import store from './store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+isDev = !app.isPackaged;
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -18,10 +19,22 @@ function createWindow() {
     },
   });
 
-  win.loadURL('http://localhost:3000');
+  if (isDev) {
+    win.loadURL('http://localhost:3000');
+  } else {
+    win.loadFile(path.join(__dirname, '../out/index.html'));
+  }
 }
 
 app.whenReady().then(() => {
+  protocol.interceptFileProtocol('file', (request, callback) => {
+    let url = request.url.replace('file://', '');
+    if (!url.includes('.')) {
+      url = path.join(__dirname, '../out', url, 'index.html');
+    }
+    callback({ path: url });
+  });
+
   ipcMain.handle('settings:get', () => {
     return store.get('settings');
   });
